@@ -70,7 +70,7 @@ def gmail_login(sub,u,p):
     ActionChains(driver).key_down(Keys.CONTROL).send_keys('e').key_up(Keys.CONTROL).perform()
     ActionChains(driver).send_keys(Keys.ENTER)
     #join button
-    xpathfinder("//*[@id='yDmH0d']/c-wiz/div/div/div[5]/div[3]/div/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/span/span").click() #mute,video
+    xpathfinder("//*[@id='yDmH0d']/c-wiz/div/div/div[6]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span").click() #mute,video
     time.sleep(60) # we need this sleep so that when the loop further down comes again, it will not open again
                     # the error case would be only if we have some sort of meeting that lasts 1 minute, but that's unrealistic 
 
@@ -508,7 +508,7 @@ class App(Tk):
                         while loop:
                             # the loop will check if there are only 5 participants left and it'll exit and at the same time if another meeting has started
                             # if it exits before the time the next meeting has started, ok becomes 1 , loop 0 and we go back to the main if and will start from there again
-                            numOfParticipants=int(driver.find_element_by_xpath('/html/body/div[1]/c-wiz/div[1]/div/div[5]/div[3]/div[6]/div[3]/div/div[2]/div[1]/span/span/div/div/span[2]').get_attribute('innerHTML'))
+                            numOfParticipants=int(driver.find_element_by_xpath('/html/body/div[1]/c-wiz/div[1]/div/div[6]/div[3]/div[6]/div[3]/div/div[2]/div[1]/span/span/div/div/span[2]').get_attribute('innerHTML'))
                             if numOfParticipants<=5:
                                 c=1
                             if c==1:
