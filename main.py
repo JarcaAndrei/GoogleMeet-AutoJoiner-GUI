@@ -70,7 +70,7 @@ def gmail_login(sub,u,p):
     ActionChains(driver).key_down(Keys.CONTROL).send_keys('e').key_up(Keys.CONTROL).perform()
     ActionChains(driver).send_keys(Keys.ENTER)
     #join button
-    xpathfinder("//*[@id='yDmH0d']/c-wiz/div/div/div[6]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span").click() #mute,video
+    xpathfinder("//*[@id='yDmH0d']/c-wiz/div/div/div[7]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span").click() #mute,video
     time.sleep(60) # we need this sleep so that when the loop further down comes again, it will not open again
                     # the error case would be only if we have some sort of meeting that lasts 1 minute, but that's unrealistic 
 
