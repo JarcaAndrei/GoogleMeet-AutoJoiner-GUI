@@ -61,6 +61,14 @@ def gmail_login(sub,u,p):
     except:
         tkinter.messagebox.showwarning("Warning","Invalid link")
         return
+    while True:
+        try:
+            driver.find_element_by_xpath("//*[@id='yDmH0d']/c-wiz/div/div/div[7]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span")
+        except:
+            driver.get(sub)
+            time.sleep(5)
+        else:
+            break
     time.sleep(2)
     #muting mic and disabling cam with hotkeys
     ActionChains(driver).key_down(Keys.CONTROL).send_keys('d').key_up(Keys.CONTROL).perform()
