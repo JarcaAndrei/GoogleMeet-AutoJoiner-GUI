@@ -16,6 +16,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
+import schedule
 import datetime
 from datetime import datetime
 import signal
@@ -42,7 +43,6 @@ def xpathfinder(path): #we need this function in case of a slow computer or some
             time.sleep(2)
         else:
             return element
-
 def gmail_login(sub,u,p):
     global driver
     driver = webdriver.Chrome(options=opt, executable_path=r'C:\webdrivers\chromedriver.exe') 
@@ -62,7 +62,14 @@ def gmail_login(sub,u,p):
     except:
         tkinter.messagebox.showwarning("Warning","Invalid link")
         return
-
+    while True:
+        try:
+            driver.find_element_by_xpath("//*[@id='yDmH0d']/c-wiz/div/div/div[7]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span")
+        except:
+            driver.get(sub)
+            time.sleep(5)
+        else:
+            break
     time.sleep(2)
     #muting mic and disabling cam with hotkeys
     ActionChains(driver).key_down(Keys.CONTROL).send_keys('d').key_up(Keys.CONTROL).perform()
@@ -515,6 +522,7 @@ class App(Tk):
                                 loop=0
                                 ok=1
                                 driver.close()
+                                break
                             else:
                                 d=strftime("%H:%M")
                                 for idem in records:
