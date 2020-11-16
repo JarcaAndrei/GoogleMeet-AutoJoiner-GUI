@@ -16,6 +16,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
+import schedule
 import datetime
 from datetime import datetime
 import signal
@@ -42,7 +43,7 @@ def xpathfinder(path): #we need this function in case of a slow computer or some
             time.sleep(2)
         else:
             return element
-def gmail_login(sub,u,p):
+def gmail_login(sub,u,p,times):
     global driver
     driver = webdriver.Chrome(options=opt, executable_path=r'C:\webdrivers\chromedriver.exe') 
     driver.get("https://accounts.google.com/ServiceLogin?service=mail&passive=true&rm=false&continue=https://mail.google.com/mail/&ss=1&scc=1&ltmpl=default&ltmplcache=2&emr=1&osid=1#identifier")
@@ -55,12 +56,23 @@ def gmail_login(sub,u,p):
         # Next Button:
     xpathfinder("//*[@id='passwordNext']/div/button").click()
     time.sleep(2)
-        # Opening Meet:
+        # Opening Meet:    
     try:
         driver.get(sub)
     except:
         tkinter.messagebox.showwarning("Warning","Invalid link")
         return
+    while True:
+        try:
+            driver.find_element_by_xpath("//*[@id='yDmH0d']/c-wiz/div/div/div[7]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span")
+        except:
+            curTime=strftime("%H:%M")
+            if curTime==str(times):
+                return
+            driver.get(sub)
+            time.sleep(5)
+        else:
+            break
     time.sleep(2)
     #muting mic and disabling cam with hotkeys
     ActionChains(driver).key_down(Keys.CONTROL).send_keys('d').key_up(Keys.CONTROL).perform()
@@ -477,6 +489,12 @@ class App(Tk):
         conn.commit()
         conn.close()
     def start(self):
+        def isAlive():
+            try:
+                driver.current_url
+                return True
+            except:
+                return False
         def real_start():
             self.progress.start()
             #the actual thread starts here 
@@ -498,7 +516,7 @@ class App(Tk):
                         #if we got the starting hour and corect day:
                         ok=0
                         sub=str(record[4])
-                        gmail_login(sub,self.u,self.p) #
+                        gmail_login(sub,self.u,self.p,record[3]) #
                     elif ok==0 and str(record[3])==curTime: # if during the previous meeting we get the ending hour, we need the ok variable to not
                         loop=1 # we have some problems here, because we either want to exit the meeting, due to a gap between meetings or a new meeting starts right after 
                             # and we need to synch this stuff
@@ -506,7 +524,15 @@ class App(Tk):
                         while loop:
                             # the loop will check if there are only 5 participants left and it'll exit and at the same time if another meeting has started
                             # if it exits before the time the next meeting has started, ok becomes 1 , loop 0 and we go back to the main if and will start from there again
-                            numOfParticipants=int(driver.find_element_by_xpath('/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[6]/div[3]/div/div[2]/div[1]/span/span/div/div/span[2]').get_attribute('innerHTML'))
+                            if isAlive()==False:
+                                ok=1
+                                time.sleep(50)
+                                break
+                            try:
+                                numOfParticipants=int(driver.find_element_by_xpath('/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[6]/div[3]/div/div[2]/div[1]/span/span/div/div/span[2]').get_attribute('innerHTML'))
+                            except:
+                                numOfParticipants=0
+                            testing=0
                             if numOfParticipants<=5:
                                 c=1
                             if c==1:
