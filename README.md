@@ -6,7 +6,6 @@
 # Installation
   pip install -r requirements.txt
   
-  For the moment, you will need chromedriver in 86.xx
 # Usage
   After the installations, you need to input your real e-mail and password and then add a meeting record, edit/delete with the id you get from the records query, start, stop, everything is pretty self-explanatory in the ui
 
