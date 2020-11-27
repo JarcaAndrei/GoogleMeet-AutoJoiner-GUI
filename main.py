@@ -21,6 +21,7 @@ import datetime
 from datetime import datetime
 import signal
 import sqlite3
+#from selenium import webdriver
 # Options to allow chrome to use mic and cam etc
 opt = Options()
 opt.add_argument("--disable-infobars")
@@ -56,7 +57,7 @@ def gmail_login(sub,u,p,times):
         # Next Button:
     xpathfinder("//*[@id='passwordNext']/div/button").click()
     time.sleep(2)
-        # Opening Meet:
+        # Opening Meet:    
     try:
         driver.get(sub)
     except:
@@ -64,7 +65,8 @@ def gmail_login(sub,u,p,times):
         return
     while True:
         try:
-            driver.find_element_by_xpath("//*[@id='yDmH0d']/c-wiz/div/div/div[7]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span")
+
+            driver.find_element_by_xpath("//*[@id='yDmH0d']/c-wiz/div/div/div[8]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span")
         except:
             curTime=strftime("%H:%M")
             if curTime==str(times):
@@ -76,11 +78,11 @@ def gmail_login(sub,u,p,times):
     time.sleep(2)
     #muting mic and disabling cam with hotkeys
     ActionChains(driver).key_down(Keys.CONTROL).send_keys('d').key_up(Keys.CONTROL).perform()
-    ActionChains(driver).send_keys(Keys.ENTER)
+    #ActionChains(driver).send_keys(Keys.ENTER)
     ActionChains(driver).key_down(Keys.CONTROL).send_keys('e').key_up(Keys.CONTROL).perform()
-    ActionChains(driver).send_keys(Keys.ENTER)
+    #ActionChains(driver).send_keys(Keys.ENTER)
     #join button
-    xpathfinder("//*[@id='yDmH0d']/c-wiz/div/div/div[7]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span").click() #mute,video
+    xpathfinder("//*[@id='yDmH0d']/c-wiz/div/div/div[8]/div[3]/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/span/span").click() #mute,video
     time.sleep(60) # we need this sleep so that when the loop further down comes again, it will not open again
                     # the error case would be only if we have some sort of meeting that lasts 1 minute, but that's unrealistic 
 
