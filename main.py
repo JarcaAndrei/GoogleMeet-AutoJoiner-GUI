@@ -531,7 +531,7 @@ class App(Tk):
                                 time.sleep(50)
                                 break
                             try:
-                                numOfParticipants=int(driver.find_element_by_xpath('/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[6]/div[3]/div/div[2]/div[1]/span/span/div/div/span[2]').get_attribute('innerHTML'))
+                                numOfParticipants=int(driver.find_element_by_xpath('/html/body/div[1]/c-wiz/div[1]/div/div[8]/div[3]/div[6]/div[3]/div/div[2]/div[1]/span/span/div/div/span[2]').get_attribute('innerHTML'))
                             except:
                                 numOfParticipants=0
                             testing=0
